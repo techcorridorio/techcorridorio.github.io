@@ -1,7 +1,14 @@
-# techcorridorio.github.io
-GitHub Pages site for techcorridor.io (temporary as of 2015-02-23)
+# techcorridor.io
+
+GitHub Pages site for techcorridor.io
 
 ## Goals
 
 * Very common technologies
-* Easily hackable (within 10 minutes of cloning!)
+  * HTML/CSS
+  * Client-side JavaScript
+  * Bootstrap
+  * jQuery
+* Hostable on GitHub Pages  (Need to have dynamic content?  Pull it from a webservice like GitHub or Meetup.)
+* Easily hackable (within 10 minutes of cloning, regardless of your OS!)
+* Easily approachable for beginners
