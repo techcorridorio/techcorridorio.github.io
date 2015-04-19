@@ -91,5 +91,29 @@
             r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
             ga('create','UA-XXXXX-X','auto');ga('send','pageview');
         </script>
+
+<script>
+function dumpResponse() {
+  // `this` will refer to the `XMLHTTPRequest` object that executes this function
+  eval('resp = '+(this.responseText)+';');
+   for(user in resp) {
+   var u = resp[user];
+   document.write('<a href="' + u['html_url']+'">');
+   document.write('<h1>' + u['login']+'</h1></a>');
+   document.write('<img src="' + u['avatar_url']+'" width=150 height=150/>');
+   document.write('<hr>');
+
+   }
+   
+}
+var request = new XMLHttpRequest();
+// Set the event handler
+request.onload = dumpResponse;
+// Initialize the request
+request.open('get', 'https://api.github.com/orgs/techcorridorio/public_members', true);
+// Fire away!
+request.send();
+
+</script>
     </body>
 </html>
