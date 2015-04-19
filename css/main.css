@@ -1,11 +1,80 @@
-
-
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(https://fonts.gstatic.com/s/opensans/v10/cJZKeOuBrn4kERxqtaUH3VtXRa8TVwTICgirnJhmVJw.woff2) format('woff2'), url(https://fonts.gstatic.com/s/opensans/v10/cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(https://fonts.gstatic.com/s/opensans/v10/MTP_ySUJH_bn48VBG8sNSugdm0LZdjqr5-oayXSOefg.woff2) format('woff2'), url(https://fonts.gstatic.com/s/opensans/v10/MTP_ySUJH_bn48VBG8sNSnhCUOGz7vYGh680lGh-uXM.woff) format('woff');
+}
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Open Sans Bold'), local('OpenSans-Bold'), url(https://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzOgdm0LZdjqr5-oayXSOefg.woff2) format('woff2'), url(https://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzHhCUOGz7vYGh680lGh-uXM.woff) format('woff');
+}
 
+body{
+	font-family: "Open Sans";
+}
 
+/* Navbar start */
+.navbar-inverse{
+	background: #8cc63f;
+}
+.navbar-inverse .navbar-brand{
+	font-size: 26px;
+	font-weight: 300;
+	color: #fff;
+	text-rendering: optimizeLegibility;
+	text-shadow: none;
+	height: 60px;
+	line-height: 58px;
+	padding:0;
+}
+.navbar-inverse .navbar-brand span{
+	font-weight:bold;
+}
+/* Navbar end */
 
+/* Jumbotron start */
+.jumbotron{
+	/*background-image: url('index_files/bg.jpg');*/
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	-ms-behavior: url(../../../backgroundsize.min.htc);
+	opacity: 1;
+	background-color:#333;
+	padding: 60px 0;
+}
+.jumbotron h1{
+	font-size: 45px;
+	font-weight:bold;
+	color: #fff;
+	text-shadow: 0px 1px 3px #000;
+}
+.jumbotron p{
+	font-size:18px;
+	color: #fff;
+	margin-top:30px;
+}
+.jumbotron .btn-primary{
+	background: #4a4d50;
+	border: 1px solid #4a4d50;
+}
+.jumbotron .btn-primary:hover{
+	background: #555;
+	border: 1px solid #555;
+}
+/* Jumbotron end */
 
 
 
