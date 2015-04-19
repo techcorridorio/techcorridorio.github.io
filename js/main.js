@@ -9,7 +9,7 @@ function userTemplate(user) {
 
 $(function () {
   $.getJSON('https://api.github.com/orgs/techcorridorio/public_members?callback=?', function (response) {
-    var html = response.data.map(userTemplate);
+    var html = response.data.map(userTemplate).join('');
     $('#people').html(html);
   });
 });
