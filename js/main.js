@@ -1,9 +1,7 @@
 function userTemplate(user) {
   var buffer = [];
-  buffer.push('<a href="' + user.html_url + '">');
-  buffer.push('<h1>' + user.login + '</h1></a>');
-  buffer.push('<img src="' + user.avatar_url + '" width=150 height=150/>');
-  buffer.push('<hr>');
+  buffer.push('<img src="' + user.avatar_url + '" width=150 height=150 />');
+  buffer.push('<a href="' + user.html_url + '"><h1>' + user.login + '</h1></a>');
   return buffer.join('');
 }
 
