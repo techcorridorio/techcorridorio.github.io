@@ -107,10 +107,8 @@ function dumpResponse() {
    
 }
 var request = new XMLHttpRequest();
-// Set the event handler
-request.onload = dumpResponse;
 // Initialize the request
-request.open('get', 'https://api.github.com/orgs/techcorridorio/public_members', true);
+request.open('get', 'https://api.github.com/orgs/techcorridorio/public_members?callback=dumpResponse', true);
 // Fire away!
 request.send();
 
