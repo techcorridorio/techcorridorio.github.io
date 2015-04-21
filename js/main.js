@@ -60,18 +60,18 @@ function userTemplate(user) {
 //   $('#people').append(html);
 // });
 
-$(function () {
-  $.getJSON('https://api.github.com/orgs/techcorridorio/public_members?callback=?', function (organizationResponse) {
-    organizationResponse.data.forEach(function (organizationUser) {
-      console.log(organizationUser.login);
-
-      $.getJSON('https://api.github.com/users/' + organizationUser.login + '?callback=?', function (userResponse) {
-        var user = userResponse.data,
-          html = userTemplate(user);
-        console.log(user);
-        console.log(html);
-        $('#people').append(html);
-      });
-    });
-  });
-});
+// $(function () {
+//   $.getJSON('https://api.github.com/orgs/techcorridorio/public_members?callback=?', function (organizationResponse) {
+//     organizationResponse.data.forEach(function (organizationUser) {
+//       console.log(organizationUser.login);
+// 
+//       $.getJSON('https://api.github.com/users/' + organizationUser.login + '?callback=?', function (userResponse) {
+//         var user = userResponse.data,
+//           html = userTemplate(user);
+//         console.log(user);
+//         console.log(html);
+//         $('#people').append(html);
+//       });
+//     });
+//   });
+// });
