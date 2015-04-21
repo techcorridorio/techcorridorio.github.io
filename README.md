@@ -9,7 +9,7 @@ GitHub Pages site for techcorridor.io
   * Client-side JavaScript
   * Bootstrap
   * jQuery
-* Hostable on GitHub Pages  (Need to have dynamic content?  Pull it from a webservice like GitHub or Meetup.)
+* Hostable on GitHub Pages  (Need to have dynamic content?  Pull it from a webservice like GitHub or Meetup via client-side JavaScript.)
 * Easily hackable (within 10 minutes of cloning, regardless of your OS!)
 * Easily approachable for beginners
 
