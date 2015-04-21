@@ -36,10 +36,18 @@ body{
 	text-shadow: none;
 	height: 60px;
 	line-height: 58px;
+    margin: 0 50px 0 20px;
 	padding:0;
 }
 .navbar-inverse .navbar-brand span{
 	font-weight:bold;
+}
+
+.navbar-inverse a {
+    color: #fff !important;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 4px;
 }
 /* Navbar end */
 
