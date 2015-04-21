@@ -45,7 +45,6 @@ body{
 
 /* Jumbotron start */
 .jumbotron{
-	/*background-image: url('index_files/bg.jpg');*/
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
