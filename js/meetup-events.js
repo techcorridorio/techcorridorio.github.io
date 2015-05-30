@@ -1,7 +1,6 @@
 'use strict';
 
-var Meetup = function(meetupURL,
-											maxEvents) {
+var Meetup = function(meetupURL, maxEvents) {
 	this.meetupURL = (typeof meetupURL!=='undefined') ? meetupURL :
 	"https://api.meetup.com/2/events?offset=0&format=json&limited_events=False&group_urlname=techcorridorio&page=200&fields=&order=time&desc=false&status=upcoming&sig_id=168857872&sig=e659cc6038d27adf6eae600a44905c69196c77df";
 	// If maxEvents==0, show all.
@@ -9,8 +8,7 @@ var Meetup = function(meetupURL,
 
 	var printDate = function(date) {
 		// Pretty print the event date
-		var day = [ "Sunday", "Monday", "Tuesday", "Wednesday", 
-								"Thursday", "Friday", "Saturday"];
+		var day = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 		var months = [
 			"January", "February", "March", "April",
 			"May", "June", "July", "August",
