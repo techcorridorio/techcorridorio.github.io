@@ -1,65 +1,71 @@
-<div id="lol-events">
-    <!-- using jQuery to generate events -->
-</div>
-
 <div id="meetup-events">
     <!-- using jQuery to generate events -->
 </div>
 
 {% raw  %}
 <script id="meetup-card" type="x-tmpl-mustache">
-<div class="panel panel-default">
-<div class="panel-heading"><a href="{{event.event_url}}" target="_blank">{{event.name}}</a></div>
+    <div class="panel panel-default">
+    <div class="panel-heading"><a href="{{event.event_url}}" target="_blank">{{event.name}}</a></div>
     <div class="panel-body">
-        <div class="col-sm-8">
-        <p>{{{event.description}}}</p>
-        </div>
-        <div class="col-sm-4"><b>WHEN:</b>{{event.time}}
-        <br><b>WHERE:</b> <a href="{{event.venue_link}}" target="_blank">{{event.venue.name}}</a>
-        <br><b>WHO:</b> {{event.yes_rsvp_count}} already going</div>
+    <div class="col-sm-8">
+    <p>{{{event.description}}}</p>
     </div>
-</div>
-</script>
-<script id="venue-link" type="x-tmpl-mustache">
-    https://www.google.com/maps/place/{{encodeURI(venue.address_1)}}++{{encodeURI(venue.city)}}
+    <div class="col-sm-4"><b>WHEN:</b> {{event.formattedDate}}
+    <br><b>WHERE:</b> <a href="{{event.venueLink}}" target="_blank">{{event.venue.name}}</a>
+    <br><b>WHO:</b> {{event.yes_rsvp_count}} already going</div>
+    </div>
+    </div>
 </script>
 {% endraw  %}
 
-
 <script type="text/javascript">
-window.onload = function() {
-    var theCallback = function(data){
-        $.each(data.results, function(i, event) {
-            event.venue_link = printVenue(event.venue);
-            createEventPanel(event);
-        })
+    window.onload = function(){
+
+        var meetup = new Meetup(
+            "https://api.meetup.com/2/events?callback=JSON_CALLBACK&offset=0&format=json&limited_events=False&group_urlname=techcorridorio&page=200&fields=&order=time&desc=false&status=upcoming&sig_id=168857872&sig=e659cc6038d27adf6eae600a44905c69196c77df",
+            5
+        ).getEvents(function(data) {
+            $.each(data.results, function(i, event) {
+                eventPresenter = EventPresenter(event);
+                createEventPanel(eventPresenter);
+            })
+        });
+
+        var createEventPanel = function (event) {
+            var template = $('#meetup-card').html();
+            Mustache.parse(template);   // optional, speeds up future uses
+            var rendered = Mustache.render(template, {"event": event});
+            $('#meetup-events').append(rendered);
+        };
+
+        var EventPresenter = function(event) {
+            var formatVenue = function(venue) {
+                var rendered = encodeURI(venue.address_1) + '+' + encodeURI(venue.city);
+                return rendered
+            };
+            var formatDate = function(date) {
+                // Pretty print the event date
+                var day = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                var months = [
+                    "January", "February", "March", "April",
+                    "May", "June", "July", "August",
+                    "September", "October", "November", "December"
+                ];
+
+                return day[date.getDay()]  + ', '
+                + months[date.getMonth()] + ' '
+                + date.getDate() + ', '
+                + date.getFullYear()
+                + ' at '
+                + (date.getHours() % 12) + ':'
+                + (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes())
+                + ' '
+                + (date.getHours() < 12 ? 'AM' : 'PM');
+            }
+
+            event.venueLink = formatVenue(event.venue);
+            event.formattedDate = formatDate(new Date(event.time));
+            return event;
+        }
     }
-
-   var meetup = new Meetup(
-    "https://api.meetup.com/2/events?callback=JSON_CALLBACK&offset=0&format=json&limited_events=False&group_urlname=techcorridorio&page=200&fields=&order=time&desc=false&status=upcoming&sig_id=168857872&sig=e659cc6038d27adf6eae600a44905c69196c77df",
-    5
-    ).getEvents(theCallback);
-
-    var createVenueLink = function(event) {
-        var template = $('#venue-link').html();
-        Mustache.parse(template);   // optional, speeds up future uses
-        var rendered = Mustache.render(template, {"venue": event.venue});
-        return rendered;
-    }
-
-	var printVenue = function(venue) {
-        var template = encodeURI(venue.address_1)
-            + '+'
-			+ encodeURI(venue.city);
-        return template
-	}
-    var createEventPanel = function (event) {
-        var template = $('#meetup-card').html();
-        Mustache.parse(template);   // optional, speeds up future uses
-        var rendered = Mustache.render(template, {"event": event});
-        $('#meetup-events').append(rendered);
-    };
-    (function loadUser() {
-    })();
-}
 </script>
