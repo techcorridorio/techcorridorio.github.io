@@ -26,12 +26,13 @@
     //assume Meetup is loaded
 
     window.onload = function(){
-        var meetup = new Meetup(
-            "https://api.meetup.com/2/events?callback=JSON_CALLBACK&offset=0&format=json&limited_events=False&group_urlname=techcorridorio&page=200&fields=&order=time&desc=false&status=upcoming&sig_id=168857872&sig=e659cc6038d27adf6eae600a44905c69196c77df"
-        ).getEvents(function(data) {
-            var maxEvents = 5;
+        var configuration = {
+            "maxEvents": 5,
+            "url": "https://api.meetup.com/2/events?callback=JSON_CALLBACK&offset=0&format=json&limited_events=False&group_urlname=techcorridorio&page=200&fields=&order=time&desc=false&status=upcoming&sig_id=168857872&sig=e659cc6038d27adf6eae600a44905c69196c77df"
+        }
+        var meetup = new Meetup(configuration.url).getEvents(function(data) {
             $.each(data.results, function(i, event) {
-                if (i < maxEvents) {
+                if (i < configuration.maxEvents) {
                     eventPresenter = EventPresenter(event);
                     createEventCard(eventPresenter);
                 }
