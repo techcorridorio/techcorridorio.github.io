@@ -8,7 +8,17 @@
 
 {% raw  %}
 <script id="meetup-card" type="x-tmpl-mustache">
-    Hello {{ name }}!
+<div class="panel panel-default">
+<div class="panel-heading"><a href="{{event.url}}" target="_blank">{{event.title}}</a></div>
+    <div class="panel-body">
+        <div class="col-sm-8">
+        <p>{{event.description}}</p>
+        </div>
+        <div class="col-sm-4"><b>WHEN:</b>{{event.date}}
+        <br><b>WHERE:</b> <a href="{{event.locationUrl}}" target="_blank">{{event.locationName}}</a>
+        <br><b>WHO:</b> {{event.attendeeCount}} already going</div>
+    </div>
+</div>
 </script>
 {% endraw  %}
 
@@ -21,10 +31,21 @@ window.onload = function() {
     5
     ).getEvents();
 
+    var event={};
+    events = [];
+    event.url = "http://www.meetup.com/techcorridorio/events/223317560/";
+    event.title = "[Web] Lightning Talks";
+    event.description = "Let's talk about the web. What are you working on? What's cool you want to learn more about?";
+    event.date = "Wednesday, June 24, 2015 at 8:00 PM";
+    event.locationUrl = "https://www.google.com/maps/place/Old%20Capitol%20Mall+Iowa%20City";
+    event.locationName = "University Capitol Center 2780";
+    event.attendeeCount = "8";
+    events[0] = event;
+
     (function loadUser() {
         var template = $('#meetup-card').html();
         Mustache.parse(template);   // optional, speeds up future uses
-        var rendered = Mustache.render(template, {name: "Luke"});
+        var rendered = Mustache.render(template, {"event": event});
         $('#lol-events').html(rendered);
     })();
 }
