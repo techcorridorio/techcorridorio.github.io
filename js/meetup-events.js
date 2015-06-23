@@ -17,7 +17,7 @@ var Meetup = function(meetupURL, maxEvents) {
 
 		return day[date.getDay()]  + ', '
 			+ months[date.getMonth()] + ' '
-			+ date.getDate() + ', ' 
+			+ date.getDate() + ', '
 			+ date.getFullYear()
 			+ ' at '
 			+ (date.getHours() % 12) + ':'
@@ -28,36 +28,16 @@ var Meetup = function(meetupURL, maxEvents) {
 
 	var printVenue = function(venue) {
 		// Pretty print the event venue
-		return '<a href="https://www.google.com/maps/place/'
+		var template = '<a href="https://www.google.com/maps/place/'
 			+ encodeURI(venue.address_1) + '+'
 			+ encodeURI(venue.city) + '" target="_blank">'
 			+ venue.name
 			+ '</a>';
+        return template
 	}
 
 	var createEventPanel = function(event) {
 		// Generates a Bootstrap panel for each event
-		var panelHTML = '<div class="panel-heading">' 
-			+ '<a href="' + event.event_url + '" target="_blank">'
-				+ event.name 
-			+ '</a></div>'
-			+ '<div class="panel-body">'
-				+ '<div class="col-sm-8">' 
-					+ event.description
-				+ '</div>'
-				+ '<div class="col-sm-4">' 
-					+ '<b>WHEN:</b> ' + printDate(new Date(event.time))
-					+ '<br>'
-					+ '<b>WHERE:</b> ' + printVenue(event.venue)
-					+ '<br>'
-					+ '<b>WHO:</b> ' + event.yes_rsvp_count + ' already going'
-				+ '</div>'
-			+ '</div>';
-
-		$("<div>", {
-			"class": "panel panel-default",
-			html: panelHTML
-		}).appendTo("#meetup-events");
 	}
 
 	this.getEvents = function(callback) {
@@ -66,12 +46,7 @@ var Meetup = function(meetupURL, maxEvents) {
 			dataType: 'jsonp'
 		})
 		.done(function(data) {
-			$.each(data.results, function(i, event) {
-				// Generate Bootstrap panels for each event
-				if (maxEvents === undefined || i < maxEvents) {
-					createEventPanel(event);					
-				}
-			})
+            callback(data);
 		})
 		.fail(function(error) {
 			console.log("Meetup API Request Failed");

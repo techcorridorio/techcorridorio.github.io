@@ -9,44 +9,57 @@
 {% raw  %}
 <script id="meetup-card" type="x-tmpl-mustache">
 <div class="panel panel-default">
-<div class="panel-heading"><a href="{{event.url}}" target="_blank">{{event.title}}</a></div>
+<div class="panel-heading"><a href="{{event.event_url}}" target="_blank">{{event.name}}</a></div>
     <div class="panel-body">
         <div class="col-sm-8">
-        <p>{{event.description}}</p>
+        <p>{{{event.description}}}</p>
         </div>
-        <div class="col-sm-4"><b>WHEN:</b>{{event.date}}
-        <br><b>WHERE:</b> <a href="{{event.locationUrl}}" target="_blank">{{event.locationName}}</a>
-        <br><b>WHO:</b> {{event.attendeeCount}} already going</div>
+        <div class="col-sm-4"><b>WHEN:</b>{{event.time}}
+        <br><b>WHERE:</b> <a href="{{event.venue_link}}" target="_blank">{{event.venue.name}}</a>
+        <br><b>WHO:</b> {{event.yes_rsvp_count}} already going</div>
     </div>
 </div>
+</script>
+<script id="venue-link" type="x-tmpl-mustache">
+    https://www.google.com/maps/place/{{encodeURI(venue.address_1)}}++{{encodeURI(venue.city)}}
 </script>
 {% endraw  %}
 
 
-
 <script type="text/javascript">
 window.onload = function() {
+    var theCallback = function(data){
+        $.each(data.results, function(i, event) {
+            event.venue_link = printVenue(event.venue);
+            createEventPanel(event);
+        })
+    }
+
    var meetup = new Meetup(
     "https://api.meetup.com/2/events?callback=JSON_CALLBACK&offset=0&format=json&limited_events=False&group_urlname=techcorridorio&page=200&fields=&order=time&desc=false&status=upcoming&sig_id=168857872&sig=e659cc6038d27adf6eae600a44905c69196c77df",
     5
-    ).getEvents();
+    ).getEvents(theCallback);
 
-    var event={};
-    events = [];
-    event.url = "http://www.meetup.com/techcorridorio/events/223317560/";
-    event.title = "[Web] Lightning Talks";
-    event.description = "Let's talk about the web. What are you working on? What's cool you want to learn more about?";
-    event.date = "Wednesday, June 24, 2015 at 8:00 PM";
-    event.locationUrl = "https://www.google.com/maps/place/Old%20Capitol%20Mall+Iowa%20City";
-    event.locationName = "University Capitol Center 2780";
-    event.attendeeCount = "8";
-    events[0] = event;
+    var createVenueLink = function(event) {
+        var template = $('#venue-link').html();
+        Mustache.parse(template);   // optional, speeds up future uses
+        var rendered = Mustache.render(template, {"venue": event.venue});
+        return rendered;
+    }
 
-    (function loadUser() {
+	var printVenue = function(venue) {
+        var template = encodeURI(venue.address_1)
+            + '+'
+			+ encodeURI(venue.city);
+        return template
+	}
+    var createEventPanel = function (event) {
         var template = $('#meetup-card').html();
         Mustache.parse(template);   // optional, speeds up future uses
         var rendered = Mustache.render(template, {"event": event});
-        $('#lol-events').html(rendered);
+        $('#meetup-events').append(rendered);
+    };
+    (function loadUser() {
     })();
 }
 </script>
