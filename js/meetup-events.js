@@ -1,10 +1,8 @@
 'use strict';
 
-var Meetup = function(meetupURL, maxEvents) {
+var Meetup = function(meetupURL) {
 	this.meetupURL = (typeof meetupURL!=='undefined') ? meetupURL :
 	"https://api.meetup.com/2/events?offset=0&format=json&limited_events=False&group_urlname=techcorridorio&page=200&fields=&order=time&desc=false&status=upcoming&sig_id=168857872&sig=e659cc6038d27adf6eae600a44905c69196c77df";
-	// If maxEvents==0, show all.
-	this.maxEvents = (typeof maxEvents!=='undefined') ? maxEvents : 0;
 
 	this.getEvents = function(callback) {
 		$.ajax({
