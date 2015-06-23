@@ -1,19 +1,18 @@
-<div class="container">
-    <div class="row">
-        <div class="page-header">
-            <h1>{{ page.header }}</h1>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                {{ content }}
-                <div id="meetup-events">
-                    <!-- using jQuery to generate events -->
-                </div>
-            </div>
-        </div>
-    </div>
+<div id="lol-events">
+    <!-- using jQuery to generate events -->
 </div>
+
+<div id="meetup-events">
+    <!-- using jQuery to generate events -->
+</div>
+
+{% raw  %}
+<script id="meetup-card" type="x-tmpl-mustache">
+    Hello {{ name }}!
+</script>
+{% endraw  %}
+
+
 
 <script type="text/javascript">
 window.onload = function() {
@@ -21,5 +20,12 @@ window.onload = function() {
     "https://api.meetup.com/2/events?callback=JSON_CALLBACK&offset=0&format=json&limited_events=False&group_urlname=techcorridorio&page=200&fields=&order=time&desc=false&status=upcoming&sig_id=168857872&sig=e659cc6038d27adf6eae600a44905c69196c77df",
     5
     ).getEvents();
+
+    (function loadUser() {
+        var template = $('#meetup-card').html();
+        Mustache.parse(template);   // optional, speeds up future uses
+        var rendered = Mustache.render(template, {name: "Luke"});
+        $('#lol-events').html(rendered);
+    })();
 }
 </script>
