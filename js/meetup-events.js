@@ -11,9 +11,29 @@ var Meetup = function(meetupURL) {
 		})
 		.done(function(data) {
             callback(data);
+
 		})
 		.fail(function(error) {
 			console.log("Meetup API Request Failed");
 		});
-	}
+	};
+
+	this.offset = 0;
+	this.page = 20;
+	this.peopleURL = (typeof meetupURL!=='undefined') ? meetupURL :
+	"https://api.meetup.com/2/members?format=json&group_urlname=techcorridorio&photo-host=public&order=name&sig_id=70201382&sig=5b77206251c64989f61e8f45580e0d200221f5d4" +
+	"&offset=" + this.offset +
+	"&page=" + this.page;
+	this.getPeople = function(callback) {
+		$.ajax({
+			url: this.peopleURL,
+			dataType: 'jsonp'
+		})
+		.done(function(data) {
+            callback(data);
+		})
+		.fail(function(error) {
+			console.log("Meetup API Request Failed");
+		});
+	};
 };
