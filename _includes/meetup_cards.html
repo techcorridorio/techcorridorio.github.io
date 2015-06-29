@@ -1,0 +1,79 @@
+<div id="meetup-events">
+    <!-- Generating events below -->
+</div>
+
+{% raw  %}
+<script id="meetup-card" type="x-tmpl-mustache">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a href="{{event.event_url}}" target="_blank">{{event.name}}</a>
+        </div>
+        <div class="panel-body">
+            <div class="col-sm-8">
+                <p>{{{event.description}}}</p>
+            </div>
+            <div class="col-sm-4"><b>WHEN:</b> {{event.formattedDate}}
+                <br><b>WHERE:</b> <a href="{{event.venueLink}}" target="_blank">{{event.venue.name}}</a>
+                <br><b>WHO:</b> {{event.yes_rsvp_count}} already going
+            </div>
+        </div>
+    </div>
+</script>
+{% endraw  %}
+
+<script type="text/javascript">
+    //assume Mustache is loaded
+    //assume Meetup is loaded
+
+    window.onload = function(){
+        var configuration = {
+            "maxEvents": 5,
+            "url": "https://api.meetup.com/2/events?callback=JSON_CALLBACK&offset=0&format=json&limited_events=False&group_urlname=techcorridorio&page=200&fields=&order=time&desc=false&status=upcoming&sig_id=168857872&sig=e659cc6038d27adf6eae600a44905c69196c77df"
+        }
+        var meetup = new Meetup(configuration.url).getEvents(function(data) {
+            $.each(data.results, function(i, event) {
+                if (i < configuration.maxEvents) {
+                    eventPresenter = EventPresenter(event);
+                    createEventCard(eventPresenter);
+                }
+            })
+        });
+
+        var createEventCard = function (event) {
+            var template = $('#meetup-card').html();
+            Mustache.parse(template);   // optional, speeds up future uses
+            var rendered = Mustache.render(template, {"event": event});
+            $('#meetup-events').append(rendered);
+        };
+
+        var EventPresenter = function(event) {
+            var formatVenueLink = function(venue) {
+                var formattedVenue = "http://maps.google.com/?q=" + encodeURI(venue.address_1) + '+' + encodeURI(venue.city);
+                return formattedVenue
+            };
+            var formatDate = function(date) {
+                // Pretty print the event date
+                var day = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                var months = [
+                    "January", "February", "March", "April",
+                    "May", "June", "July", "August",
+                    "September", "October", "November", "December"
+                ];
+
+                return day[date.getDay()]  + ', '
+                + months[date.getMonth()] + ' '
+                + date.getDate() + ', '
+                + date.getFullYear()
+                + ' at '
+                + (date.getHours() % 12) + ':'
+                + (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes())
+                + ' '
+                + (date.getHours() < 12 ? 'AM' : 'PM');
+            }
+
+            event.venueLink = formatVenueLink(event.venue);
+            event.formattedDate = formatDate(new Date(event.time));
+            return event;
+        }
+    }
+</script>
