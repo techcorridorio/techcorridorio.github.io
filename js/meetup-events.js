@@ -18,15 +18,14 @@ var Meetup = function(meetupURL) {
 		});
 	};
 
-	this.offset = 0;
-	this.page = 20;
-	this.peopleURL = (typeof meetupURL!=='undefined') ? meetupURL :
-	"https://api.meetup.com/2/members?format=json&group_urlname=techcorridorio&photo-host=public&order=name&sig_id=70201382&sig=5b77206251c64989f61e8f45580e0d200221f5d4" +
-	"&offset=" + this.offset +
-	"&page=" + this.page;
-	this.getPeople = function(callback) {
+	var requested_page = window.location.search.match(/page=(\d+)/);
+	var offset = (requested_page == null ? 0 : parseInt(requested_page[1]) - 1);
+	offset = (offset < 0 ? 0 : offset);
+	this.developersURL = "https://api.meetup.com/2/members?format=json&group_urlname=techcorridorio&photo-host=public&order=name&sig_id=70201382&sig=5b77206251c64989f61e8f45580e0d200221f5d4&page=20" +
+	                     "&offset=" + offset;
+	this.getDevelopers = function(callback) {
 		$.ajax({
-			url: this.peopleURL,
+			url: this.developersURL,
 			dataType: 'jsonp'
 		})
 		.done(function(data) {
