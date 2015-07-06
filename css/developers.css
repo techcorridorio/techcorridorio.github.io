@@ -1,0 +1,43 @@
+#developers nav {
+  text-align: center;
+}
+
+.developer-card header h2 {
+  margin: 5px 0;
+}
+
+.developer-card header h2 a {
+  font-color: inherit;
+  font-weight: inherit;
+}
+
+.developer-card .description header {
+  display: inline-block;
+}
+
+.developer-card .description header h3 {
+  font-weight: bold;
+  font-size: inherit;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.developer-card .photo img {
+  width: 100%;
+}
+
+.developer-card figcaption {
+  font-size: xx-small;
+}
+/*
+  restricts developer-card height on non small devices
+  if the height is different, floating cards look awful, as 2 cards are shown per line
+  on small screens, it show 1 card per line, so no size restriction needed
+*/
+@media (min-width: 768px) {
+  .developer-card .panel-body{
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
