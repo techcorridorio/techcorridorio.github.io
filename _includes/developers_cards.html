@@ -89,32 +89,37 @@
           return links;
         };
 
-        new Meetup().getDevelopers(function(data) {
-          var paginatorTmpl = $('#developer-paginator').html();
-          Mustache.parse(paginatorTmpl);   // optional, speeds up future uses
-          var links = getPaginatorLinks(data.meta.total_count);
-          var paginator = Mustache.render(paginatorTmpl, {'links': links});
+	var MEMBERS_URL = 'https://api.meetup.com/2/members?page=20&' +
+            'group_urlname=techcorridorio&photo-host=public&order=name&' +
+            'sig_id=70201382&sig=5b77206251c64989f61e8f45580e0d200221f5d4';
 
-          $('#developers').append(paginator);
+        new Meetup(MEMBERS_URL).fetch()
+          .then(function(members) {
+            var paginatorTmpl = $('#developer-paginator').html();
+            Mustache.parse(paginatorTmpl);   // optional, speeds up future uses
+            var links = getPaginatorLinks(data.meta.total_count);
+            var paginator = Mustache.render(paginatorTmpl, {'links': links});
 
-          $.each(data.results, function(i, dev) {
-              developerData = devPresenter(dev);
-              createDevCard(developerData);
+            $('#developers').append(paginator);
+
+            $.each(members, function(i, dev) {
+                createDevCard(devPresenter(dev));
+            });
+
+            $('#developers').append(paginator);
+          })
+          .fail(function(error) {
+            console.log(error);
           });
 
-          $('#developers').append(paginator);
-
-
-        });
-
-        var createDevCard = function (dev) {
+        function createDevCard(dev) {
             var template = $('#developer-card').html();
             Mustache.parse(template);   // optional, speeds up future uses
             var rendered = Mustache.render(template, {'developer': dev});
             $('#developers').append(rendered);
-        };
+        }
 
-        var devPresenter = function(dev) {
+        function devPresenter(dev) {
             var separator = ", ";
             var interests = "";
             dev.topics.forEach(function(topic){

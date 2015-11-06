@@ -26,27 +26,31 @@
     //assume Meetup is loaded
 
     window.onload = function(){
-        var configuration = {
-            "maxEvents": 5,
-            "url": "https://api.meetup.com/2/events?callback=JSON_CALLBACK&offset=0&format=json&limited_events=False&group_urlname=techcorridorio&page=200&fields=&order=time&desc=false&status=upcoming&sig_id=168857872&sig=e659cc6038d27adf6eae600a44905c69196c77df"
-        }
-        var meetup = new Meetup(configuration.url).getEvents(function(data) {
-            $.each(data.results, function(i, event) {
-                if (i < configuration.maxEvents) {
-                    eventPresenter = EventPresenter(event);
-                    createEventCard(eventPresenter);
-                }
-            })
-        });
+        var MAX_EVENTS = 5;
 
-        var createEventCard = function (event) {
+        var EVENTS_URL = 'https://api.meetup.com/2/events?' +
+            'limited_events=False&group_urlname=techcorridorio&page=200&' +
+            'fields=&order=time&desc=false&status=upcoming&sig_id=168857872&' +
+            'sig=e659cc6038d27adf6eae600a44905c69196c77df';
+
+        new Meetup(EVENTS_URL).fetch(MAX_EVENTS)
+            .then(function(events) {
+                $.each(events, function(i, event) {
+                    createEventCard(EventPresenter(event));
+                })
+            })
+            .fail(function(error) {
+                console.log(error);
+            });
+
+        function createEventCard(event) {
             var template = $('#meetup-card').html();
             Mustache.parse(template);   // optional, speeds up future uses
             var rendered = Mustache.render(template, {"event": event});
             $('#meetup-events').append(rendered);
-        };
+        }
 
-        var EventPresenter = function(event) {
+        function EventPresenter(event) {
             var formatVenueLink = function(venue) {
                 var formattedVenue = "http://maps.google.com/?q=" + encodeURI(venue.address_1) + '+' + encodeURI(venue.city);
                 return formattedVenue
