@@ -1,3 +1,8 @@
+<div id="meetup-developers-error" class="alert alert-danger hidden">
+    <p>There was a problem fetching the developers list. Please reload the page to try again.</p>
+    <samp class="output"></samp>
+</div>
+
 <div id="developers">
     <!-- Generating events below -->
 </div>
@@ -109,7 +114,10 @@
             $('#developers').append(paginator);
           })
           .fail(function(error) {
-            console.log(error);
+              $('#meetup-developers-error')
+                  .removeClass('hidden')
+                  .find('.output')
+                  .text('' + error);
           });
 
         function createDevCard(dev) {

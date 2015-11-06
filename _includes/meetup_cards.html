@@ -1,3 +1,8 @@
+<div id="meetup-events-error" class="alert alert-danger hidden">
+    <p>There was a problem fetching the Events. Please reload the page to try again.</p>
+    <samp class="output"></samp>
+</div>
+
 <div id="meetup-events">
     <!-- Generating events below -->
 </div>
@@ -40,7 +45,10 @@
                 })
             })
             .fail(function(error) {
-                console.log(error);
+                $('#meetup-events-error')
+                    .removeClass('hidden')
+                    .find('.output')
+                    .text('' + error);
             });
 
         function createEventCard(event) {
