@@ -30,7 +30,7 @@
     //assume Mustache is loaded
     //assume Meetup is loaded
 
-    window.onload = function(){
+    $(function(){
         var MAX_EVENTS = 5;
 
         var EVENTS_URL = 'https://api.meetup.com/2/events?' +
@@ -87,5 +87,5 @@
             event.formattedDate = formatDate(new Date(event.time));
             return event;
         }
-    }
+    });
 </script>

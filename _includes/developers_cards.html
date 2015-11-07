@@ -73,7 +73,7 @@
     //assume Mustache is loaded
     //assume Meetup is loaded
 
-    window.onload = function(){
+    $(function(){
         var getPaginatorLinks = function(results) {
           var current_page = document.location.search.match(/page=(\d+)/);
           current_page = current_page == null ? 1 : parseInt(current_page[1]);
@@ -151,5 +151,5 @@
 
             return dev;
         }
-    }
+    });
 </script>
