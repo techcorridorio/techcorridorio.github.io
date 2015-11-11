@@ -1,3 +1,8 @@
+---
+layout: page
+header: Slack Guidelines
+---
+
 This is a quick guide to the TechCorridor.io Slack.  We are quickly approaching 300 members, so some guidelines are helpful!
 
   * #announcements:  Slack doesn't allow members to leave this main channel, and it generally shouldn't have idle chitchat.  Example uses: announcing a meetup and some brief discussion, introducing new members, routing people to the right channels, and news that applies to everyone.
