@@ -2,6 +2,7 @@
 
 GitHub Pages site for techcorridor.io
 
+[![Build Status](https://travis-ci.org/techcorridorio/techcorridorio.github.io.svg?branch=master)](https://travis-ci.org/techcorridorio/techcorridorio.github.io)
 [![Stories in Ready](https://badge.waffle.io/techcorridorio/techcorridorio.github.io.png?label=ready&title=Ready)](https://waffle.io/techcorridorio/techcorridorio.github.io)
 
 ## Goals
