@@ -1,7 +1,8 @@
-[![Stories in Ready](https://badge.waffle.io/techcorridorio/techcorridorio.github.io.png?label=ready&title=Ready)](https://waffle.io/techcorridorio/techcorridorio.github.io)
 # techcorridor.io
 
 GitHub Pages site for techcorridor.io
+
+[![Stories in Ready](https://badge.waffle.io/techcorridorio/techcorridorio.github.io.png?label=ready&title=Ready)](https://waffle.io/techcorridorio/techcorridorio.github.io)
 
 ## Goals
 
