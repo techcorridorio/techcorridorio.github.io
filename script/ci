@@ -1,0 +1,13 @@
+#!/bin/sh
+set -o errexit
+
+# Dependencies
+# ------------
+#
+# On OSX and Linux:
+#
+#     sudo easy_install pip
+#     sudo pip install LinkChecker
+#
+bundle exec jekyll build
+linkchecker '_site/index.html'
