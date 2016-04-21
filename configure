@@ -1,0 +1,36 @@
+#!/bin/sh
+set -o errexit
+
+hash python 2>/dev/null || {
+  >&2 echo '[warn] Not found: python.  Install with your package manager.'
+}
+echo '[info] Available: python'
+
+hash pip 2>/dev/null || {
+  >&2 echo '[warn] Not found: pip.  Install with:'
+  >&2 echo '[warn]'
+  >&2 echo '[warn]     Install with: sudo easy_install pip'
+  >&2 echo '[warn]'
+  exit -1
+}
+echo '[info] Available: pip'
+
+hash linkchecker 2>/dev/null || {
+  echo '[info] Installing linkchecker'
+  pip install --user LinkChecker
+}
+echo '[info] Available: linkchecker'
+
+hash ruby 2>/dev/null || {
+  >&2 echo '[warn] Not found: ruby.  Install with your package manager.'
+}
+echo '[info] Available: ruby'
+
+hash bundle 2>/dev/null || {
+  echo '[info] Installing bundler'
+  gem install bundler
+}
+echo '[info] Available: bundler'
+
+echo '[info] Installing gems'
+bundle
