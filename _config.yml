@@ -1,4 +1,5 @@
 ---
+exclude: [vendor]
 gems:
   - jekyll-redirect-from
 ---
