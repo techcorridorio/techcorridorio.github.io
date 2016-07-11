@@ -8,7 +8,7 @@ This is a quick guide to the TechCorridor.io Slack.  We currently have 362 membe
   * `#announcements`:  Slack doesn't allow members to leave this main channel, and it generally shouldn't have idle chitchat.  Example uses: announcing a meetup and some brief discussion, introducing new members, routing people to the right channels, and news that applies to everyone.
   * `#chitchat`:  Anything is welcome, as long as it follows our [code of conduct](/code-of-conduct.html)
   * `#programming`: General programming discussion.  Git, text editors, FP, OOP, exception handling, stuff like that.
-  * `#jobs`: Tech job postings in the Corridor.  You're welcome to post here if you're looking for work, as well.  A best practice is to use direct messages to continue the conversation.
+  * `#jobs`: Tech job postings in the Corridor.  (Listings in this channel should be limited to jobs that are local to the Iowa City/Cedar Rapids area, or remote-friendly jobs.)  You're welcome to post here if you're looking for work, as well.  A best practice is to use direct messages to continue the conversation.
 
 ## Best Practices
 
