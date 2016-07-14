@@ -17,7 +17,8 @@ echo '[info] Available: pip'
 
 hash linkchecker 2>/dev/null || {
   echo '[info] Installing linkchecker'
-  pip install --user LinkChecker
+  pip install --user 'requests==2.9.2' # 2.10 causes an issue in LinkChecker
+  pip install --user 'LinkChecker==9.3'
 }
 echo '[info] Available: linkchecker'
 
@@ -28,7 +29,7 @@ echo '[info] Available: ruby'
 
 hash bundle 2>/dev/null || {
   echo '[info] Installing bundler'
-  gem install bundler
+  gem install bundler -v '1.12.5'
 }
 echo '[info] Available: bundler'
 
