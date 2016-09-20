@@ -49,6 +49,12 @@ body{
     font-weight: 700;
     margin-top: 4px;
 }
+
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+    background-color: #6FAB20;
+}
+
 /* Navbar end */
 
 /* Jumbotron start */
