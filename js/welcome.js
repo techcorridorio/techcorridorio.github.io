@@ -42,7 +42,9 @@ function browserWelcome() {
   prompt('Copy', welcome(names));
 }
 
-if (typeof this.process !== 'undefined') { // node.js
+var top = (function () { return this; })();
+
+if (top.process !== 'undefined') { // node.js
   var names = process.argv.slice(2, process.argv.length); // first one is the filename :S
 
   if (names.length == 0) {
