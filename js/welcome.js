@@ -35,7 +35,7 @@ function test() {
 
 function browserWelcome() {
   var raw, names;
-  
+
   raw = prompt('Names?  (separate with whitespace)');
   names = raw.split(/\s+/);
 
