@@ -6,6 +6,7 @@ layout: default
         <h1>Welcome to techcorridor.io</h1>
         <p>TechCorridor.io is a developer group in Iowa City and Cedar Rapids, IA. If you’re interested in programming, the intertubes, and whatnot, this is the group for you.</p>
         <p><a class="btn btn-primary btn-lg" href="http://www.meetup.com/techcorridorio" role="button">Join us at one of our Meetups!</a></p>
+        <p id="meetup-event"></p>
     </div>
 </div>
 
@@ -28,3 +29,56 @@ layout: default
         </div>
     </div>
 </div>
+
+{% raw  %}
+<script type="text/javascript">
+    //assume Mustache is loaded
+    //assume Meetup is loaded
+    
+    // Modify from _includes/meetup_cards.html 
+
+    window.onload = function(){
+        var configuration = {
+            "maxEvents": 5,
+            "url": "https://api.meetup.com/2/events?callback=JSON_CALLBACK&offset=0&format=json&limited_events=False&group_urlname=techcorridorio&page=200&fields=&order=time&desc=false&status=upcoming&sig_id=168857872&sig=e659cc6038d27adf6eae600a44905c69196c77df"
+        }
+        var meetup = new Meetup(configuration.url).getEvents(function(data) {
+            eventPresenter = EventPresenter(data.results[0]);
+            console.log(eventPresenter);
+            createEventParagraph(eventPresenter);
+        });
+
+        var createEventParagraph = function (event) {
+            var template = "Next meetup: <a href='{{event_url}}' target='_blank'>{{name}}</a>";
+            Mustache.parse(template);   // optional, speeds up future uses
+            var rendered = Mustache.render(template, event);
+            $('#meetup-event').html(rendered);
+        };
+
+        var EventPresenter = function(event) {
+            var formatVenueLink = function(venue) {
+                var formattedVenue = "http://maps.google.com/?q=" + encodeURI(venue.address_1) + '+' + encodeURI(venue.city);
+                return formattedVenue
+            };
+            var formatDate = function(date) {
+                // Pretty print the event date
+                var day = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                var months = [
+                    "January", "February", "March", "April",
+                    "May", "June", "July", "August",
+                    "September", "October", "November", "December"
+                ];
+
+                return day[date.getDay()]  + ', '
+                + months[date.getMonth()] + ' '
+                + date.getDate() + ', '
+                + date.getFullYear();
+            }
+
+            event.venueLink = formatVenueLink(event.venue);
+            event.formattedDate = formatDate(new Date(event.time));
+            return event;
+        }
+    }
+</script>
+{% endraw  %}
