@@ -48,7 +48,7 @@ layout: default
         });
 
         var createEventParagraph = function (event) {
-            var template = "Next meetup: <a href='{{event_url}}' target='_blank'>{{name}}</a>";
+            var template = "Next meetup: <a href='{{event_url}}' target='_blank'>{{name}} ({{formattedDate}})</a>";
             Mustache.parse(template);   // optional, speeds up future uses
             var rendered = Mustache.render(template, event);
             $('#meetup-event').html(rendered);
@@ -68,10 +68,8 @@ layout: default
                     "September", "October", "November", "December"
                 ];
 
-                return day[date.getDay()]  + ', '
-                + months[date.getMonth()] + ' '
-                + date.getDate() + ', '
-                + date.getFullYear();
+                return months[date.getMonth()] + ' '
+                + date.getDate();
             }
 
             event.venueLink = formatVenueLink(event.venue);
