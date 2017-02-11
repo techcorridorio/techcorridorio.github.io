@@ -44,7 +44,6 @@ layout: default
         }
         var meetup = new Meetup(configuration.url).getEvents(function(data) {
             eventPresenter = EventPresenter(data.results[0]);
-            console.log(eventPresenter);
             createEventParagraph(eventPresenter);
         });
 
