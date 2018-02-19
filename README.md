@@ -24,14 +24,4 @@ GitHub Pages site for techcorridor.io
 
 This site uses GitHub Pages.  GitHub Pages uses a static site generator called Jekyll.
 
-To set up dependencies on OSX or Linux, run `./configure`.
-
-After that succeeds, you can run Jekyll like so:
-
-    jekyll serve
-
-And then visit [http://127.0.0.1:4000/](http://127.0.0.1:4000/).
-
-## Running tests
-
-Our CI (Continuous Integration) script is `script/ci`.  You will need to have run `./configure` first.
+A Dockerized development environment is provided.  Install Docker and Docker Compose on your platform and then run `docker-compose up`.  You can then visit [http://localhost:4000/](http://localhost:4000/).
