@@ -39,14 +39,15 @@ var Meetup = function(meetupURL) {
 
 var EventPresenter = function(event) {
     var formatVenueLink = function(venue) {
-        return "http://maps.google.com/?q=" + encodeURI(venue.address_1) + '+' + encodeURI(venue.city);
+        return 'http://maps.google.com/?q=' + encodeURI(venue.address_1) +
+			   '+' + encodeURI(venue.city);
     };
 
-    var day = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var day = [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var months = [
-        "January", "February", "March", "April",
-        "May", "June", "July", "August",
-        "September", "October", "November", "December"
+        'January', 'February', 'March', 'April',
+        'May', 'June', 'July', 'August',
+        'September', 'October', 'November', 'December'
     ];
 
     var formatShortDate = function(date) {
@@ -76,7 +77,8 @@ var EventPresenter = function(event) {
 };
 
 var createEventParagraph = function (event) {
-    var template = "Next meetup: <a href='{{event_url}}' target='_blank'>{{name}} ({{formattedShortDate}})</a>";
+    var template = 'Next meetup: <a href=\'{{event_url}}\' target=\'_blank\'>' +
+		           '{{name}} ({{formattedShortDate}})</a>';
     Mustache.parse(template);   // optional, speeds up future uses
     var rendered = Mustache.render(template, event);
     $('#meetup-event').html(rendered);
