@@ -30,52 +30,16 @@ layout: default
     </div>
 </div>
 
-{% raw  %}
 <script type="text/javascript">
     //assume Mustache is loaded
     //assume Meetup is loaded
-    
-    // Modify from _includes/meetup_cards.html 
 
     window.onload = function(){
-        var configuration = {
-            "maxEvents": 5,
-            "url": "https://api.meetup.com/2/events?callback=JSON_CALLBACK&offset=0&format=json&limited_events=False&group_urlname=techcorridorio&page=200&fields=&order=time&desc=false&status=upcoming&sig_id=168857872&sig=e659cc6038d27adf6eae600a44905c69196c77df"
-        }
-        var meetup = new Meetup(configuration.url).getEvents(function(data) {
-            eventPresenter = EventPresenter(data.results[0]);
+        var meetupUrl = "https://api.meetup.com/2/events?callback=JSON_CALLBACK&offset=0&format=json&limited_events=False&group_urlname=techcorridorio&page=200&fields=&order=time&desc=false&status=upcoming&sig_id=168857872&sig=e659cc6038d27adf6eae600a44905c69196c77df";
+
+        new Meetup(meetupUrl).getEvents(function(data) {
+            var eventPresenter = EventPresenter(data.results[0]);
             createEventParagraph(eventPresenter);
         });
-
-        var createEventParagraph = function (event) {
-            var template = "Next meetup: <a href='{{event_url}}' target='_blank'>{{name}} ({{formattedDate}})</a>";
-            Mustache.parse(template);   // optional, speeds up future uses
-            var rendered = Mustache.render(template, event);
-            $('#meetup-event').html(rendered);
-        };
-
-        var EventPresenter = function(event) {
-            var formatVenueLink = function(venue) {
-                var formattedVenue = "http://maps.google.com/?q=" + encodeURI(venue.address_1) + '+' + encodeURI(venue.city);
-                return formattedVenue
-            };
-            var formatDate = function(date) {
-                // Pretty print the event date
-                var day = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                var months = [
-                    "January", "February", "March", "April",
-                    "May", "June", "July", "August",
-                    "September", "October", "November", "December"
-                ];
-
-                return months[date.getMonth()] + ' '
-                + date.getDate();
-            }
-
-            event.venueLink = formatVenueLink(event.venue);
-            event.formattedDate = formatDate(new Date(event.time));
-            return event;
-        }
-    }
+    };
 </script>
-{% endraw  %}

@@ -36,3 +36,50 @@ var Meetup = function(meetupURL) {
 		});
 	};
 };
+
+var EventPresenter = function(event) {
+    var formatVenueLink = function(venue) {
+        return "http://maps.google.com/?q=" + encodeURI(venue.address_1) + '+' + encodeURI(venue.city);
+    };
+
+    var day = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var months = [
+        "January", "February", "March", "April",
+        "May", "June", "July", "August",
+        "September", "October", "November", "December"
+    ];
+
+    var formatShortDate = function(date) {
+        // Pretty print the event date
+        return months[date.getMonth()] + ' ' + date.getDate();
+    };
+
+    var formatLongDate = function(date) {
+        // Pretty print the event date
+
+        return day[date.getDay()]  + ', '
+            + months[date.getMonth()] + ' '
+            + date.getDate() + ', '
+            + date.getFullYear()
+            + ' at '
+            + (date.getHours() % 12) + ':'
+            + (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes())
+            + ' '
+            + (date.getHours() < 12 ? 'AM' : 'PM');
+    };
+
+    var eventDate = new Date(event.time);
+
+    event.venueLink = formatVenueLink(event.venue);
+    event.formattedShortDate = formatShortDate(eventDate);
+    event.formattedLongDate = formatLongDate(eventDate);
+
+    return event;
+};
+
+var createEventParagraph = function (event) {
+    var template = "Next meetup: <a href='{{event_url}}' target='_blank'>{{name}} ({{formattedShortDate}})</a>";
+    Mustache.parse(template);   // optional, speeds up future uses
+    var rendered = Mustache.render(template, event);
+    $('#meetup-event').html(rendered);
+};
