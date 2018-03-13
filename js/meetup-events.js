@@ -57,15 +57,13 @@ var EventPresenter = function(event) {
     var formatLongDate = function(date) {
         // Pretty print the event date
 
-        return day[date.getDay()]  + ', '
-            + months[date.getMonth()] + ' '
-            + date.getDate() + ', '
-            + date.getFullYear()
-            + ' at '
-            + (date.getHours() % 12) + ':'
-            + (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes())
-            + ' '
-            + (date.getHours() < 12 ? 'AM' : 'PM');
+        return day[date.getDay()]  + ', ' +
+               months[date.getMonth()] + ' ' +
+               date.getDate() + ', ' +
+               date.getFullYear() + ' at ' +
+               (date.getHours() % 12) + ':' +
+               (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()) + ' ' +
+               (date.getHours() < 12 ? 'AM' : 'PM');
     };
 
     var eventDate = new Date(event.time);
