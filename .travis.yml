@@ -1,5 +1,0 @@
-language: ruby
-before_install:
-  - ./configure
-script:
-  - script/ci
