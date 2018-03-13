@@ -1,5 +1,3 @@
----
 exclude: [vendor]
-gems:
+plugins:
   - jekyll-redirect-from
----
