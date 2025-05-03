@@ -6,6 +6,7 @@ layout: default
         <h1>Welcome to techcorridor.io</h1>
         <p>TechCorridor.io is a developer group in Iowa City and Cedar Rapids, IA. If you’re interested in programming, the intertubes, and whatnot, this is the group for you.</p>
         <p><a class="btn btn-primary btn-lg" href="http://www.meetup.com/techcorridorio" role="button">Join us at one of our Meetups!</a></p>
+        <p id="meetup-event"></p>
     </div>
 </div>
 
@@ -28,3 +29,17 @@ layout: default
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    //assume Mustache is loaded
+    //assume Meetup is loaded
+
+    window.onload = function(){
+        var meetupUrl = "https://api.meetup.com/2/events?callback=JSON_CALLBACK&offset=0&format=json&limited_events=False&group_urlname=techcorridorio&page=200&fields=&order=time&desc=false&status=upcoming&sig_id=168857872&sig=e659cc6038d27adf6eae600a44905c69196c77df";
+
+        new Meetup(meetupUrl).getEvents(function(data) {
+            var eventPresenter = EventPresenter(data.results[0]);
+            createEventParagraph(eventPresenter);
+        });
+    };
+</script>

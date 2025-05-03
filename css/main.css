@@ -88,3 +88,8 @@ body{
 	border: 1px solid #555;
 }
 /* Jumbotron end */
+
+/* meetup-event for the home page */
+#meetup-event a {
+	color: white;
+}
