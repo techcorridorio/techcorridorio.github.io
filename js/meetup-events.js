@@ -1,38 +1,52 @@
-'use strict';
-
-var Meetup = function(meetupURL) {
-	this.meetupURL = (typeof meetupURL!=='undefined') ? meetupURL :
-	"https://api.meetup.com/2/events?offset=0&format=json&limited_events=False&group_urlname=techcorridorio&page=200&fields=&order=time&desc=false&status=upcoming&sig_id=168857872&sig=e659cc6038d27adf6eae600a44905c69196c77df";
-
-	this.getEvents = function(callback) {
-		$.ajax({
-			url: this.meetupURL,
-			dataType: 'jsonp'
-		})
-		.done(function(data) {
-            callback(data);
-
-		})
-		.fail(function(error) {
-			console.log("Meetup API Request Failed");
+/* globals define */
+(function(root, factory) {
+	if (typeof define === 'function' && define.amd) {
+		// AMD. Register as an anonymous module.
+		define([], function() {
+			// Also create a global in case some scripts
+			// that are loaded still are looking for
+			// a global even when an AMD loader is in use.
+			return (root.Meetup = factory());
 		});
+	} else {
+		// Browser globals
+		root.Meetup = factory();
+	}
+}(this, function() {
+	'use strict';
+
+	var MISSING_REOURCE_MSG = 'resourceUrl not defined. Please see ' +
+		'http://www.meetup.com/meetup_api/auth/#keysign ' +
+		'to see how to create a signed resource URL.';
+
+	function Meetup(resourceUrl) {
+		var requestedPage = parseInt(URI().getQuery('page'), 10);
+		this.offset = Math.max(0,  (requestedPage - 1) || 0);
+		this.resourceUrl = resourceUrl;
+	}
+
+	Meetup.prototype.fetch = function(limit) {
+		if (!this.resourceUrl) {
+			return $.Deferred()
+				.reject(new Error(MISSING_REOURCE_MSG))
+				.promise();
+		}
+
+		var url = URI(this.resourceUrl)
+			.setQuery({
+				offset: this.offset,
+				format: 'json'
+			})
+			.toString();
+
+		return $.ajax({url: url, dataType: 'jsonp'})
+			.then(function(data) {
+				if (!limit) { return data.results; }
+				return $.grep(data.results, function(item_, index) {
+					return index <= limit;
+				});
+			});
 	};
 
-	var requested_page = window.location.search.match(/page=(\d+)/);
-	var offset = (requested_page == null ? 0 : parseInt(requested_page[1]) - 1);
-	offset = (offset < 0 ? 0 : offset);
-	this.developersURL = "https://api.meetup.com/2/members?format=json&group_urlname=techcorridorio&photo-host=public&order=name&sig_id=70201382&sig=5b77206251c64989f61e8f45580e0d200221f5d4&page=20" +
-	                     "&offset=" + offset;
-	this.getDevelopers = function(callback) {
-		$.ajax({
-			url: this.developersURL,
-			dataType: 'jsonp'
-		})
-		.done(function(data) {
-            callback(data);
-		})
-		.fail(function(error) {
-			console.log("Meetup API Request Failed");
-		});
-	};
-};
+	return Meetup;
+}));
